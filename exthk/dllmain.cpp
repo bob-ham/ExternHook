@@ -1,6 +1,5 @@
 #include <windows.h>
 
-#include <windows.h>
 
 /* Simple function that just logs a file. */
 extern "C" __declspec(dllexport) void ThreadpoolCallback()
@@ -17,4 +16,5 @@ extern "C" __declspec(dllexport) void ThreadpoolCallback()
         WriteFile(hFile, text, 33, &bytesWritten, NULL);
         CloseHandle(hFile);
     }
+
 }

@@ -9,7 +9,7 @@
 struct HookLibrary
 {
 	Process* process = nullptr;
-	std::map<void*, Hook> registry;
+	std::map<void*, Hook*> registry;
 	Mapper::MapResult lastMapResult = { 0, 0, false };
 };
 

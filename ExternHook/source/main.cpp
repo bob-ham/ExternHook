@@ -10,6 +10,7 @@ int main()
 {
 	/* Get QPC as a test. */
 	void* QPC = GetProcAddress(GetModuleHandleA("Kernel32.dll"), "QueryPerformanceCounter");
+	EH_HOOK qpcHook = nullptr;
 
 	if (EH_Initialize(szProcessName) != EH_OK)
 	{
@@ -28,7 +29,7 @@ int main()
 		}
 
 		/* Hook onto QPC. */
-		EH_STATUS status = EH_CreateHook(QPC, (void*)entry);
+		EH_STATUS status = EH_CreateHook(QPC, (void*)entry, &qpcHook);
 		if (status != EH_OK)
 		{
 			printf("EH_CreateHook failed!\n");
@@ -44,7 +45,7 @@ int main()
 	printf("Hook placed at address: 0x%p\n", (void*)entry);
 	printf("Press any key to clean up.\n");
 	Sleep(1000);
-	EH_CleanHook();
+	EH_CleanHook(qpcHook);
 	system("pause");
 
 	EH_Uninitialize();
