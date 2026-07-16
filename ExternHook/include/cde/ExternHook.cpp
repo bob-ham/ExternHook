@@ -1,6 +1,13 @@
 #include "../ExternHook.h"
 #include "defs.h"
 #include <string>
+#include <tlhelp32.h>
+#include <vector>
+
+
+
+
+
 
 EH_STATUS __stdcall EH_Initialize(const char* processName)
 {
@@ -21,8 +28,16 @@ EH_STATUS __stdcall EH_CreateHook(void* jmpInstruction, void* newTarget)
 {
 	if (!g_Lib.process) return EH_STATUS::EH_ERROR_INTENRAL;
 
+	DWORD targetPID = g_Lib.process->get_pid();
+
+	g_Lib.process->SuspendAllThreads(targetPID, true);
+
 	Hook h;
-	if (!h.hook(*g_Lib.process, jmpInstruction, newTarget))
+	bool success = h.hook(*g_Lib.process, jmpInstruction, newTarget);
+
+	g_Lib.process->SuspendAllThreads(targetPID, false);
+
+	if (!success)
 		return EH_STATUS::EH_HOOK_FAILED;
 
 	g_Lib.registry[jmpInstruction] = h;
@@ -34,11 +49,17 @@ EH_STATUS __stdcall EH_CleanHook()
 {
 	if (!g_Lib.process) return EH_STATUS::EH_ERROR_INTENRAL;
 
+	DWORD targetPID = g_Lib.process->get_pid();
+
+	g_Lib.process->SuspendAllThreads(targetPID, true);
+
 	/* Unhooking via a registry I made with std::map. */
 	for (auto& [addr, hookObj] : g_Lib.registry)
 	{
 		hookObj.unhook(*g_Lib.process);
 	}
+
+	g_Lib.process->SuspendAllThreads(targetPID, false);
 	
 	g_Lib.registry.clear();
 	return EH_STATUS::EH_OK;

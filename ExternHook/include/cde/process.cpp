@@ -120,3 +120,35 @@ PVOID Process::allocate_mem(SIZE_T size, ULONG type, ULONG prot)
 	_NtAllocateVirtualMemory(this->handle, &base, 0, &size, type, prot);
 	return base;
 }
+
+/* suspend all threads for stablity when injecting */
+void Process::SuspendAllThreads(DWORD processId, bool suspend)
+{
+	HANDLE hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPTHREAD, 0);
+	if (hSnapshot == INVALID_HANDLE_VALUE) return;
+
+	THREADENTRY32 te;
+	te.dwSize = sizeof(THREADENTRY32);
+
+	if (Thread32First(hSnapshot, &te))
+	{
+		do
+		{
+			if (te.th32OwnerProcessID == processId)
+			{
+				HANDLE hThread = OpenThread(THREAD_SUSPEND_RESUME, FALSE, te.th32ThreadID);
+				if (hThread != NULL)
+				{
+					if (suspend)
+						SuspendThread(hThread);
+					else
+						ResumeThread(hThread);
+
+					CloseHandle(hThread);
+				}
+			}
+		} while (Thread32Next(hSnapshot, &te));
+	}
+
+	CloseHandle(hSnapshot);
+}

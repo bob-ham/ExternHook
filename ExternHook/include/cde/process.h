@@ -41,6 +41,10 @@ public:
 	NTSTATUS change_protection(PVOID base, SIZE_T size, ULONG prot, PULONG oldProt);
 	PVOID allocate_mem(SIZE_T size, ULONG type, ULONG prot);
 
+	/* temp helper function to just see if thisll work or not */
+	void SuspendAllThreads(DWORD processID, bool suspend);
+
+
 	/* module stuff */
 	struct Module {
 		std::string name;
@@ -51,3 +55,4 @@ public:
 	std::vector<Module> get_all_modules();
 	Module* GetModuleByName(const std::vector<Module>& modules, const std::string& name);
 };
+
