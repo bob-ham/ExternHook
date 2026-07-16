@@ -34,7 +34,6 @@ EH_STATUS __stdcall EH_CleanHook()
 {
 	if (!g_Lib.process) return EH_STATUS::EH_ERROR_INTENRAL;
 
-	/* Unhooking via a registry I made with std::map. */
 	for (auto& [addr, hookObj] : g_Lib.registry)
 	{
 		hookObj.unhook(*g_Lib.process);
