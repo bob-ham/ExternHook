@@ -7,9 +7,5 @@
 - I'll add support for older versions (C++11)
 - Check the Proof-Of-Concept video if you have any doubts.
 
-<video width="640" controls>
-  <source src="https://github.com/bob-ham/ExternHook/releases/download/V1.0.0/Proof-Of-Concept.mov" type="video/quicktime">
-</video>   
-
 
 # THIS IS VERSION V1.0.0 #
