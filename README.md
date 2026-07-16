@@ -9,6 +9,7 @@
 
 <video width="640" controls>
   <source src="https://github.com/bob-ham/ExternHook/releases/download/V1.0.0/Proof-Of-Concept.mov" type="video/quicktime">
+  Your browser does not support the video tag.
 </video>   
 
 
