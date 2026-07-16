@@ -66,7 +66,7 @@ extern "C" {
 	EH_STATUS __stdcall EH_Map(const wchar_t* DllPath, uintptr_t* outEntryPoint);
 	
 	/* 
-	* Creates an external hook via pointer to pointer hooking (IAT hooking).
+	* Creates an external hook via IAT hooking.
 	* 
 	* IN - jmpInstruction -> The function you want to hook on.
 	* IN - newTarget -> Your exported function in your dll (edit mmap.cpp for that).
