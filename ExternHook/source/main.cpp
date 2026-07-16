@@ -33,7 +33,7 @@ int main()
 		if (status != EH_OK)
 		{
 			printf("EH_CreateHook failed!\n");
-			EH_Uninitialize();
+			EH_CleanHook(qpcHook);
 			return -1;
 		}
 	}
