@@ -5,7 +5,6 @@
 - Changes to come: Hopefully, internal hooking, but this won't be likely. QOL features, more functions and control.
 - Mainly, I targetted roblox, but i'll go for other games as well.
 - I'll add support for older versions (C++11)
-- Check the Proof-Of-Concept video if you have any doubts.
 
 
 # THIS IS VERSION V1.0.0 #
